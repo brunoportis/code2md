@@ -87,6 +87,7 @@ def format_as_markdown(project_structure: dict) -> str:
 def summary(
     path: Path = typer.Argument(..., help="Path to the project directory"),
     output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output Markdown file"),
+    ignore: List[str] = typer.Option([], "--ignore", "-i", help="Directories to ignore (e.g. migrations/)"),
 ):
     """
     Generate a markdown summary of the project structure.
@@ -98,8 +99,11 @@ def summary(
     project_structure = {}
 
     for root, dirs, files in os.walk(path):
-        # Skip hidden directories and common ones
-        dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ('__pycache__', '.venv', 'node_modules')]
+        # Skip hidden directories, common ones, and user-specified ones
+        to_ignore = {'__pycache__', '.venv', 'node_modules'}.union(
+            {i.rstrip('/') for i in ignore}
+        )
+        dirs[:] = [d for d in dirs if not d.startswith('.') and d not in to_ignore]
         
         for file in files:
             if file.endswith(".py"):

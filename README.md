@@ -20,6 +20,9 @@ code2md summary .
 
 # Output to a file
 code2md summary . --output summary.md
+
+# Ignore specific directories (e.g. migrations or custom folders)
+code2md summary . --ignore migrations --ignore utils/
 ```
 
 ## 📝 Example Output

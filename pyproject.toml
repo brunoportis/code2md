@@ -1,0 +1,13 @@
+[project]
+name = "code2md"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "rich>=15.0.0",
+    "typer>=0.24.1",
+]
+
+[project.scripts]
+code2md = "code2md.main:app"
